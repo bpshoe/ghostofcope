@@ -19,21 +19,38 @@ r.login(REDDIT_USERNAME, REDDIT_PASS)
 
 
 #create an empty file if it does not exist this section should be replaced with dynamo db
-if not os.path.isfile("posts_replied_to.txt"):
-	posts_replied_to = []
+if not os.path.isfile("comments_replied_to.txt"):
+	comments_replied_to = []
 
 # load the file into a list and remove empty lines
 else: 
-	with open("posts_replied_to.txt", "r") as f:
-		posts_replied_to = f.read()
-		posts_replied_to = posts_replied_to.split("\n")
-		posts_replied_to = filter(None, posts_replied_to)
+	with open("comments_replied_to.txt", "r") as f:
+		comments_replied_to = f.read()
+		comments_replied_to = comments_replied_to.split("\n")
+		comments_replied_to = filter(None, comments_replied_to)
 
-#get hot 5 from subreddit
+#set subreddit
 subreddit = r.get_subreddit('bbottest')
+
+#get hot 5 posts
 for submission in subreddit.get_hot(limit=5):
 
 	print submission.title
 
-#if submission.id not in posts_replied_to:
+	#flattent post comments
+	flat_comments = praw.helpers.flatten_tree(submission.comments)
 
+	for comment in flat_comments:
+
+		#do a case insensitive search for the string
+		if re.search("steelers", comment.body, re.IGNORECASE) and comment.id not in comments_replied_to:
+			#add a reply
+			comment.reply('here we go')
+			print "Bot replying to: ", comment.body
+
+			#store current ID in the list
+			comments_replied_to.append(comment.id)
+
+with open("comments_replied_to.txt", "w") as f:
+    for comment_id in comments_replied_to:
+        f.write(comment_id + "\n")
