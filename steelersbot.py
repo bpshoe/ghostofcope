@@ -5,7 +5,7 @@ user_agent = ("SteelersBot v0.0")
 
 r = praw.Reddit(user_agent = user_agent)
 
-subreddit = r.get_subreddit("steelers")
+subreddit = r.get_subreddit("bbottest")
 
 for submission in subreddit.get_hot(limit = 5):
 
