@@ -12,7 +12,7 @@ if not os.path.isfile("config_bot.py"):
 	exit(1)
 
 # create reddit instance
-user_agent = ("StillersBot v0.0")
+user_agent = ("Cope's Ghost v0.0")
 
 r = praw.Reddit(user_agent=user_agent)
 # login
@@ -34,7 +34,7 @@ else:
 subreddit = r.get_subreddit('bbottest')
 
 #get hot 5 posts
-for submission in subreddit.get_hot(limit=5):
+for submission in subreddit.get_hot(limit=25):
 
 	print submission.title
 
@@ -43,15 +43,24 @@ for submission in subreddit.get_hot(limit=5):
 
 	for comment in flat_comments:
 
+
 		#do a case insensitive search for the string
-		if re.search("steelers", comment.body, re.IGNORECASE) and comment.id not in comments_replied_to:
+		if re.search("myron", "cope", comment.body, re.IGNORECASE) and comment.id not in comments_replied_to:
 			#add a reply
-			comment.reply('here we go')
+			comment.reply('Yoi!')
+			print "Bot replying to: ", comment.body
+		
+		#do a case insensitive search for the string
+		if re.search("yoi", comment.body, re.IGNORECASE) and comment.id not in comments_replied_to:
+			#add a reply
+			comment.reply('Double Yoi!')
 			print "Bot replying to: ", comment.body
 
-			#store current ID in the list
-			comments_replied_to.append(comment.id)
+
+		#store current ID in the list
+		comments_replied_to.append(comment.id)
 
 with open("comments_replied_to.txt", "w") as f:
     for comment_id in comments_replied_to:
         f.write(comment_id + "\n")
+
