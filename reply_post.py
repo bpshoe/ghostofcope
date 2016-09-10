@@ -43,6 +43,7 @@ for submission in subreddit.get_hot(limit=25):
 
 	for comment in flat_comments:
 
+		print comment.body
 
 		def yoi():
 		    #add a reply
@@ -59,8 +60,11 @@ for submission in subreddit.get_hot(limit=25):
 		for word, action in actions:
 		    m = re.match(word, comment.body)
 		    if m: 
+		    	print 'success'
 		        action()
 		        break
+	        else:
+	        	print 'failed'
 
 
 	#store current ID in the list
