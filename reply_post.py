@@ -4,6 +4,9 @@ import re
 import os
 from config_bot import *
 
+cope = re.compile('cope', re.IGNORECASE)
+myron = re.compile('myron', re.IGNORECASE)
+yoistring = re.compile('yoi', re.IGNORECASE)
 
 # check if file exists if not create it
 #thisi a test edit foo mo fu
@@ -43,8 +46,6 @@ for submission in subreddit.get_hot(limit=25):
 
 	for comment in flat_comments:
 
-		print comment.body
-
 		def yoi():
 		    #add a reply
 			comment.reply('Yoi!')
@@ -55,7 +56,7 @@ for submission in subreddit.get_hot(limit=25):
 			comment.reply('Double Yoi!')
 			print "Bot replying to: ", comment.body
 
-		actions = (('myron', yoi), ('cope', yoi), ('yoi', doubleyoi))
+		actions = ((cope, yoi), (myron, yoi), (yoistring, doubleyoi))
 
 		for word, action in actions:
 		    m = re.match(word, comment.body)
