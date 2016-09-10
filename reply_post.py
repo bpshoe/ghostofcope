@@ -44,23 +44,29 @@ for submission in subreddit.get_hot(limit=25):
 	for comment in flat_comments:
 
 
-		#do a case insensitive search for the string
-		if re.search("myron", "cope", comment.body, re.IGNORECASE) and comment.id not in comments_replied_to:
-			#add a reply
+		def yoi():
+		    #add a reply
 			comment.reply('Yoi!')
 			print "Bot replying to: ", comment.body
-		
-		#do a case insensitive search for the string
-		if re.search("yoi", comment.body, re.IGNORECASE) and comment.id not in comments_replied_to:
-			#add a reply
+
+		def doubleyoi():
+		    #add a reply
 			comment.reply('Double Yoi!')
 			print "Bot replying to: ", comment.body
 
+		actions = (('myron', yoi), ('cope', yoi), ('yoi', doubleyoi))
 
-		#store current ID in the list
-		comments_replied_to.append(comment.id)
+		for word, action in actions:
+		    m = re.match(word, comment.body)
+		    if m: 
+		        action()
+		        break
 
-with open("comments_replied_to.txt", "w") as f:
-    for comment_id in comments_replied_to:
-        f.write(comment_id + "\n")
+
+	#store current ID in the list
+	comments_replied_to.append(comment.id)
+
+	with open("comments_replied_to.txt", "w") as f:
+	    for comment_id in comments_replied_to:
+	        f.write(comment_id + "\n")
 
