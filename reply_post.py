@@ -6,6 +6,7 @@ from config_bot import *
 
 
 # check if file exists if not create it
+#thisi a test edit foo mo fu
 if not os.path.isfile("config_bot.py"):
 	print "You must create a config file with you username and password"
 	exit(1)
