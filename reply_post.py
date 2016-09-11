@@ -37,7 +37,7 @@ else:
 subreddit = r.get_subreddit('bbottest')
 
 #get hot 5 posts
-for submission in subreddit.get_hot(limit=25):
+for submission in subreddit.get_hot(limit=5):
 
 	print submission.title
 
