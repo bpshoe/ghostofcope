@@ -72,8 +72,6 @@ for submission in subreddit.get_hot(limit=5):
 			with open("comments_replied_to.txt", "w") as f:
 			    for comment_id in comments_replied_to:
 			        f.write(comment_id + "\n")
-			
-		        break
 	        else:
 	        	print 'failed'
 
