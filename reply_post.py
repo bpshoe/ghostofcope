@@ -60,18 +60,23 @@ for submission in subreddit.get_hot(limit=25):
 
 		for word, action in actions:
 		    m = re.match(word, comment.body)
-		    if m: 
+
+		    
+		    if m and comment.id not in comments_replied_to: 
 		    	print 'success'
+
 		        action()
+
+		        comments_replied_to.append(comment.id)
+
+			with open("comments_replied_to.txt", "w") as f:
+			    for comment_id in comments_replied_to:
+			        f.write(comment_id + "\n")
+			
 		        break
 	        else:
 	        	print 'failed'
 
 
-	#store current ID in the list
-	comments_replied_to.append(comment.id)
-
-	with open("comments_replied_to.txt", "w") as f:
-	    for comment_id in comments_replied_to:
-	        f.write(comment_id + "\n")
+	
 
